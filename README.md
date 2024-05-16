@@ -10,3 +10,6 @@ Graph data of top 35 fastest bicycle racing record - in particular, through a sc
  1. The D3 must load through cdn link.
  1. Request the dataset through XMR.
  1. Scatter plot the data with D3.
+
+## References
+ 1. D3 docs: [d3js.org](https://d3js.org/d3-scale/time)

@@ -9,7 +9,47 @@ let DATA = null;
 // SCATTER PLOT
 function graphData(data) {
 	// console
-	console.log('Scatter plot...')
+	console.log('Scatter plot...');
+
+	// graph dimension
+	const w = 900;
+	const h = 550;
+	const padTop = 20;
+	const padBottom = 40;
+	const padLeft = 70;
+	const padRight = 40;
+
+	// x-scale
+	const xScale = d3.scaleLinear()
+		.domain([
+			d3.min(data, d => d.Year), 
+			d3.max(data, d => d.Year)
+		])
+		.range([padLeft, w - padRight]);
+	// y-scale
+	const parseTime = d3.timeParse("%M:%S");
+	const yScale = d3.scaleTime()
+		.domain([
+			d3.min(data, d => parseTime(d.Time)), 
+			d3.max(data, d => parseTime(d.Time))
+		])
+		.range([padTop, h - padBottom]);
+
+	// svg
+	const svg = d3.select("#svg-container")
+		.append("svg")
+		.attr("width", w)
+		.attr("height", h);
+
+	// const circle = svg.selectAll("circle")
+	// 	.data(data)
+	// 	.enter()
+	// 	.append("circle")
+	// 	.attr("fill", "orange")
+	// 	.attr("cx", 15)
+	// 	.attr("cy", 15)
+	// 	.attr("x", d => padLeft + xScale(d.Year))
+	// 	.attr("y", d => padTop + yScale(d.Year));
 }
 
 
