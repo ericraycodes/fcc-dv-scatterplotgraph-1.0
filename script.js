@@ -11,6 +11,7 @@ function graphData(data) {
 	// console
 	console.log('Scatter plot...');
 
+
 	// graph dimension
 	const w = 900;
 	const h = 500;
@@ -18,6 +19,7 @@ function graphData(data) {
 	const padBottom = 40;
 	const padLeft = 70;
 	const padRight = 40;
+
 
 	// x-scale
 	const xScale = d3.scaleLinear()
@@ -28,19 +30,20 @@ function graphData(data) {
 		.range([padLeft, w - padRight]);
 	// y-scale
 	const parseTime = d3.timeParse("%M:%S");
-	console.log('parse time', parseTime("30:04"));
-	const yScale = d3.scaleUtc()
+	const yScale = d3.scaleTime()
 		.domain([
 			d3.min(data, d => parseTime(d.Time)), 
 			d3.max(data, d => parseTime(d.Time))
 		])
 		.range([padTop, h - padBottom]);
 
+
 	// svg
 	const svg = d3.select("#svg-container")
 		.append("svg")
 		.attr("width", w)
 		.attr("height", h);
+
 
 	// x-axis
 	const xAxis = d3.axisBottom(xScale)
@@ -50,12 +53,22 @@ function graphData(data) {
 		.attr("id", "x-axis")
 		.attr("transform", `translate(0, ${h - padBottom})`);
 	// y-axis
+	const formatTime = d3.timeFormat("%M:%S");
 	const yAxis = d3.axisLeft(yScale)
 		.ticks(d3.timeSecond.every(15))
+		.tickFormat(time => formatTime(time));
 	svg.append("g")
 		.call(yAxis)
 		.attr("id", "y-axis")
-		.attr("transform", `translate(${padLeft}, 0)`)
+		.attr("transform", `translate(${padLeft}, 0)`);
+	// label
+	svg.append("text")
+		.text("Time in Minutes")
+		.attr("class", "y-axis-label")
+		.attr("x", -200)
+		.attr("y", 25)
+		.style("transform", "rotate(-90deg)")
+
 
 	// plots
 	const circle = svg.selectAll("circle")
@@ -68,8 +81,10 @@ function graphData(data) {
 		.attr("cy", d => yScale(parseTime(d.Time)))
 		.attr("data-xvalue", d => parseInt(d.Year))
 		.attr("data-yvalue", d => parseTime(d.Time))
-		.style("fill", d => d.Doping==="" ? "green":"red")
-		.style("opacity", 0.7);
+		.style("fill", d => d.Doping==="" ? "green":"red");
+	// // legend
+	// const legend = d3.select("#legend");
+	// legend.append("circle")
 }
 
 

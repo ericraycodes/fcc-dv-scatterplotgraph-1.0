@@ -34,3 +34,24 @@ footer {
 	margin-top: 20px;
 	font-size: 0.8rem;
 }
+
+/* graph */
+.dot {
+	stroke: black;
+	opacity: 0.7;
+}
+.y-axis-label {
+	font-size: 0.7rem;
+}
+#legend {
+	position: absolute;
+	display: flex;
+	flex-direction: column;
+	align-items: end;
+}
+#no-allegation {
+	color: green;
+}
+#allegation {
+	color: red;
+}
