@@ -5,6 +5,7 @@
 	box-sizing: border-box;
 	padding: 0;
 	margin: 0;
+	font-family: Calibri, Trebuchet MS sans-serif;
 }
 
 
@@ -20,8 +21,16 @@ body {
 main {
 	text-align: center;
 }
+h1,
+h2 {
+	font-weight: lighter;
+}
 #svg-container {
 	border: 1px solid lightgray;
 	box-sizing: content-box;
 	padding: 20px;
+}
+footer {
+	margin-top: 20px;
+	font-size: 0.8rem;
 }

@@ -13,7 +13,7 @@ function graphData(data) {
 
 	// graph dimension
 	const w = 900;
-	const h = 550;
+	const h = 500;
 	const padTop = 20;
 	const padBottom = 40;
 	const padLeft = 70;
@@ -22,8 +22,8 @@ function graphData(data) {
 	// x-scale
 	const xScale = d3.scaleLinear()
 		.domain([
-			d3.min(data, d => d.Year), 
-			d3.max(data, d => d.Year)
+			d3.min(data, d => parseInt(d.Year) - 1), 
+			d3.max(data, d => parseInt(d.Year) + 1)
 		])
 		.range([padLeft, w - padRight]);
 	// y-scale
@@ -41,15 +41,22 @@ function graphData(data) {
 		.attr("width", w)
 		.attr("height", h);
 
-	// const circle = svg.selectAll("circle")
-	// 	.data(data)
-	// 	.enter()
-	// 	.append("circle")
-	// 	.attr("fill", "orange")
-	// 	.attr("cx", 15)
-	// 	.attr("cy", 15)
-	// 	.attr("x", d => padLeft + xScale(d.Year))
-	// 	.attr("y", d => padTop + yScale(d.Year));
+	// x-axis
+	const xAxis = d3.axisBottom(xScale)
+		.tickFormat(year => year.toString());
+	svg.append("g")
+		.attr("transform", `translate(0, ${h - padBottom})`)
+		.call(xAxis);
+
+	// plots
+	const circle = svg.selectAll("circle")
+		.data(data)
+		.enter()
+		.append("circle")
+		.attr("r", 7)
+		.attr("cx", d => xScale(parseInt(d.Year)))
+		.attr("cy", d => padTop + yScale(parseTime(d.Time)))
+		.style("fill", d => d.Doping==="" ? "green":"red");
 }
 
 
