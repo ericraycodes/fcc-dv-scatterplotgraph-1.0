@@ -14,9 +14,9 @@ function graphData(data) {
 
 	// graph dimension
 	const w = 900;
-	const h = 500;
+	const h = 450;
 	const padTop = 20;
-	const padBottom = 40;
+	const padBottom = 30;
 	const padLeft = 70;
 	const padRight = 40;
 
@@ -71,7 +71,7 @@ function graphData(data) {
 
 
 	// plots
-	const circle = svg.selectAll("circle")
+	const circles = svg.selectAll("circle")
 		.data(data)
 		.enter()
 		.append("circle")
@@ -81,10 +81,43 @@ function graphData(data) {
 		.attr("cy", d => yScale(parseTime(d.Time)))
 		.attr("data-xvalue", d => parseInt(d.Year))
 		.attr("data-yvalue", d => parseTime(d.Time))
-		.style("fill", d => d.Doping==="" ? "green":"red");
-	// // legend
-	// const legend = d3.select("#legend");
-	// legend.append("circle")
+		// green : #0A6847, red : #DF2E38
+		.style("fill", d => d.Doping==="" ? "#0A6847":"#DF2E38");
+
+
+	// tooltip
+	const tooltip = d3.select("#tooltip");
+	circles
+		.on("mouseover", d => {
+			const doping = d.Doping==="" ? "":`<br><p>${d.Doping}</p>`
+			tooltip
+				.attr("data-year", parseInt(d.Year))
+				.html(
+					`
+					<p>${d.Name} (${d.Nationality})</p>
+					<p>Year: ${d.Year}, Time: ${d.Time}</p>
+					${doping}
+					`
+				)
+				.style("top", d3.event.pageY - 20 + "px")
+				.style("left", d3.event.pageX + 15 + "px")
+				.style("visibility", "visible")
+		})
+		// .on("mousemove", () => {
+		// 	tooltip
+		// 		.style("top", d3.event.pageY - 20 + "px")
+		// 		.style("left", d3.event.pageX + 15 + "px")
+		// })
+		.on("mouseout", () => {
+			tooltip
+				.style("top", 0)
+				.style("left", 0)
+				.style("visibility", "hidden")
+		})
+
+
+	// show graph visibility
+	d3.selectAll(".visible").style("visibility", "visible")
 }
 
 

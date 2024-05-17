@@ -19,6 +19,7 @@ body {
 	justify-content: center;
 }
 main {
+	position: relative;
 	text-align: center;
 }
 h1,
@@ -29,6 +30,7 @@ h2 {
 	border: 1px solid lightgray;
 	box-sizing: content-box;
 	padding: 20px;
+	margin-top: 20px;
 }
 footer {
 	margin-top: 20px;
@@ -40,18 +42,48 @@ footer {
 	stroke: black;
 	opacity: 0.7;
 }
-.y-axis-label {
-	font-size: 0.7rem;
+.y-axis-label,
+label {
+	font-size: 0.8rem;
 }
 #legend {
 	position: absolute;
 	display: flex;
 	flex-direction: column;
 	align-items: end;
+	right: 20px;
+	top: 110px;
 }
 #no-allegation {
-	color: green;
+	background-color: #0A6847;
 }
 #allegation {
-	color: red;
+	background-color: #DF2E38;
+}
+.legend {
+	display: inline-block;
+	width: 20px;
+	height: 20px;
+	opacity: 0.8;
+}
+label {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	gap: 10px;
+	margin: 2px;
+}
+#tooltip {
+	position: fixed;
+	visibility: hidden;
+	font-size: 0.8rem;
+	background-color: lightblue;
+	border-radius: 5px;
+	padding: 10px;
+	text-align: left;
+}
+
+/* on graph load */
+.visible {
+	visibility: hidden;
 }
